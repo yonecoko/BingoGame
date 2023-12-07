@@ -50,7 +50,8 @@ for (let i = 0; i < 5; i++) {
 
 const freeArea = document.querySelectorAll("td");
 freeArea[12].textContent = "FREE";
-freeArea[12].style.backgroundColor = "gray";
+freeArea[12].style.backgroundColor = "black";
+freeArea[12].style.color = "green";
 
 const startBtn = document.querySelector(".startBtn");
 const bingoNumbers = document.querySelectorAll(".bingoNumber");
@@ -74,7 +75,8 @@ startBtn.addEventListener("click", function () {
 
   bingoNumbers.forEach((bingoNumber) => {
     if (bingoNumber.textContent == hitNumArr[hitNumArr.length - 1]) {
-      bingoNumber.style.backgroundColor = "gray";
+      bingoNumber.style.backgroundColor = "black";
+      bingoNumber.style.color = "green";
     }
   });
 });
