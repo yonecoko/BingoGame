@@ -1,83 +1,62 @@
-// bingoAreaという変数にid名bingoAreaの要素を取得
-const bingoArea = document.getElementById("bingoArea");
-
 // allNumArraysという配列を初期化
-let allNumArrays = [];
+const allNumArr = [];
+const table = document.getElementById("bingoArea");
+const PlusRowNum = [1, 16, 31, 46, 61];
+const tdArr = [];
 
-// numRangeという変数に15を代入
-let numRange = 15;
+const randomNumberFactory = function (i) {
+  let randomNumber;
+
+  while (true) {
+    randomNumber = Math.floor(Math.random() * 15) + PlusRowNum[i];
+
+    if (!allNumArr.includes(randomNumber)) {
+      allNumArr.push(randomNumber);
+      break;
+    }
+  }
+  return randomNumber;
+};
 
 // for文で5回繰り返す処理を記述
-for (let i = 0; i < 5; i++) {
-    // arrという定数に配列を宣言、都度初期化させて5回分の配列の値を保持させる
-const arr = [];
+const AllRandomnumber = () => {
+  for (let i = 0; i < 5; i++) {
+    const tr = document.createElement("tr");
+    table.appendChild(tr);
 
-// for文で5回繰り返す処理
-for (let j = 0; j < 5; j++) {
-    // randomNumberという変数を定義
-    let randomNumber;
+    for (let j = 0; j < 5; j++) {
+      const td = document.createElement("td");
+      tr.appendChild(td);
+      const randomNumber = randomNumberFactory(j);
+      td.id = `num${i}-${j}`;
+      tdArr.push({ id: td.id, num: randomNumber });
+      td.textContent = randomNumber;
 
-    // do while文で25回繰り返し処理する
-    do {
-      // 変数randoumNumberにnumRange(15)をかけた値にi(0-4)×numRange(15)を足し、1を足す
-      // randomNumber = (ランダムに生成された数値(0-1の間)：例えば0.4) * numRange(15) (= 6) + i(0) * numRange(15) (= 0) + 1 =7 
-      // これを5回、5配列分繰り返す
-      randomNumber = Math.floor(Math.random() * numRange) + i * numRange + 1;
-
-      // 数値の重複を確認
-      // 配列arrにrandomNumberの数値が入って行く中で、同じ数値
-    } while (arr.includes(randomNumber));
-
-    // do-whileのループ文を抜けた後じゃないと重複の確認ができないらしい
-    arr.push(randomNumber);
-}
-
-allNumArrays.push(arr);
-}
-
-for (let i = 0; i < 5; i++) {
-  const bingoNumRow = document.createElement("tr");
-  bingoArea.appendChild(bingoNumRow);
-  bingoNumRow.className = `Row${i}`;
-
-  for (let j = 0; j < 5; j++) {
-    bingoNumber = document.createElement("td");
-    bingoNumRow.appendChild(bingoNumber);
-    bingoNumber.className = `num${j} bingoNumber`;
-    bingoNumber.textContent = allNumArrays[j][i];
+      if (j === 2 && i === 2) {
+        td.className = "colorChange";
+        td.textContent = "FREE";
+      }
+    }
   }
-}
+};
 
-const freeArea = document.querySelectorAll("td");
-freeArea[12].textContent = "FREE";
-freeArea[12].style.backgroundColor = "black";
-freeArea[12].style.color = "green";
-
+//domからとってきて数値を確認する方法も考える
 const startBtn = document.querySelector(".startBtn");
-const bingoNumbers = document.querySelectorAll(".bingoNumber");
 
-let hitNumArr = [];
+const numberAleat = function () {
+  startBtn.addEventListener("click", function () {
+    const hitNum = Math.floor(Math.random() * 75) + 1;
+    alert(`数字は${hitNum}です！`);
 
-startBtn.addEventListener("click", function () {
-  hitNumArr = [];
+    const tdFind = tdArr.find((tdObj) => {
+      return tdObj.num === hitNum;
+    });
 
-  for (let j = 1; j < 76; j++) {
-    let hitNum;
-
-    do {
-      hitNum = Math.floor(Math.random() * 75) + 1;
-    } while (hitNumArr.includes(hitNum));
-
-    hitNumArr.push(hitNum);
-  }
-
-  alert(`数字は${hitNumArr[hitNumArr.length - 1]}です！`);
-
-  bingoNumbers.forEach((bingoNumber) => {
-    if (bingoNumber.textContent == hitNumArr[hitNumArr.length - 1]) {
-      bingoNumber.style.backgroundColor = "black";
-      bingoNumber.style.color = "green";
+    if (tdFind) {
+      document.getElementById(tdFind.id).className = "colorChange";
     }
   });
-});
+};
 
+AllRandomnumber();
+numberAleat();
