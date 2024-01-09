@@ -60,3 +60,25 @@ const numberAleat = function () {
 
 AllRandomnumber();
 numberAleat();
+
+// const array = [1, 2, 3, 4, 5];
+// const ele = 3;
+
+// const toggleArrayElement = (array, ele) => {
+//   //ここに記述
+//   let array2 = [];
+
+//   // arrayの要素がeleと同じか確認するforEachを作って
+//   // その要素の中でeleと同じ要素があったら、削除→この作業は1回だけにしたい
+//   array.forEach((arr) => {
+//     if (arr.includes(ele)) {
+//       array2.pop();
+//     } else {
+//       array2.push(ele);
+//     }
+//   });
+
+//   return array2;
+// };
+
+// toggleArrayElement();
